@@ -2,25 +2,31 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 12f;
+    public float speed = 10f;
     public int damage = 50;
-    public float lifetime = 2f;
-    private float direction = 1f;
+    public float lifetime = 6f;
 
-    void Start()
+    private float direction = 1f;
+    private float timer;
+
+    void OnEnable()
     {
-        Destroy(gameObject, lifetime); 
+        timer = 0f;
     }
 
     void Update()
     {
-        transform.Translate(Vector2.right * speed * direction * Time.deltaTime); 
+        transform.Translate(Vector2.right * speed * direction * Time.deltaTime);
+        timer += Time.deltaTime;
+        if (timer >= lifetime)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void SetDirection(float dir)
     {
         direction = dir;
-        // Optional: Flip sprite if your bullet image requires it
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * Mathf.Sign(dir);
         transform.localScale = scale;
@@ -35,11 +41,11 @@ public class Bullet : MonoBehaviour
             {
                 enemy.TakeDamage(damage);
             }
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         else if (!collision.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

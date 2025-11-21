@@ -5,7 +5,6 @@ public class Coin : MonoBehaviour
 {
     public AudioClip coinClip;
     public TextMeshProUGUI coinText;
-
     public int coinsToGive = 1;
 
     void Start()
@@ -17,11 +16,11 @@ public class Coin : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            GameManager.instance.AddCoin(coinsToGive);
             Player player = collision.gameObject.GetComponent<Player>();
-            player.coins += coinsToGive;
             player.PlaySFX(coinClip, 0.4f);
-            coinText.text = player.coins.ToString();
-            Destroy(gameObject); // destroy the coin
+            coinText.text = GameManager.instance.coins.ToString();
+            Destroy(gameObject);
             Debug.Log("Touched");
         }
     }

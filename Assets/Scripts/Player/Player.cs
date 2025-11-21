@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public int health = 100;
     public float moveSpeed = 10f;
     public float jumpHeight = 10f;
+    private bool isDead = false;
     public float groundCheckRadius = 0.2f;
     private Rigidbody2D rb;
     private Animator animator;
@@ -103,6 +104,8 @@ public class Player : MonoBehaviour
         // If player hits the enemy's body (child collider tagged "Damage")
         if (collision.gameObject.CompareTag("Damage"))
         {
+            if (isDead) return; // Ignore further damage
+
             PlaySFX(hurtClip, 0.4f);
             health -= 25;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpHeight);
@@ -110,9 +113,10 @@ public class Player : MonoBehaviour
 
             if (health <= 0)
             {
+                isDead = true; // Mark dead
                 Die();
             }
-        }
+    }
 
         else if (collision.gameObject.CompareTag("BouncePad"))
         {
@@ -127,6 +131,7 @@ public class Player : MonoBehaviour
     }
     private void Die()
     {
+        GameManager.instance.PlayerDied();
         Time.timeScale = 0;
         RestartGame.instance.GameOverPanel.SetActive(true);
     }
