@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Transform groundCheck;
     public LayerMask groundLayer;
-    private bool isGrounded;
+    private bool isGrounded = false;
     public int extraJumpsValue = 1;
     private int extraJumps;
     public Image healthImage;
@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
                 isDead = true; // Mark dead
                 Die();
             }
-    }
+        }
 
         else if (collision.gameObject.CompareTag("BouncePad"))
         {

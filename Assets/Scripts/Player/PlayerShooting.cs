@@ -32,7 +32,7 @@ public class PlayerShooting : MonoBehaviour
         GameObject bullet = BulletPool.instance.GetBullet(firePoint.position, direction);
         if (bullet == null)
         {
-            Debug.LogWarning("No bullets available in pool");
+            return;
         }
     }
 

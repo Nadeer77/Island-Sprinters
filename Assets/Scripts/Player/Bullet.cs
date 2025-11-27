@@ -20,7 +20,8 @@ public class Bullet : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= lifetime)
         {
-            gameObject.SetActive(false);
+            // IMPORTANT: return to pool
+            BulletPool.instance.ReturnBullet(gameObject);
         }
     }
 
@@ -41,11 +42,13 @@ public class Bullet : MonoBehaviour
             {
                 enemy.TakeDamage(damage);
             }
-            gameObject.SetActive(false);
+            // IMPORTANT: return to pool
+            BulletPool.instance.ReturnBullet(gameObject);
         }
         else if (!collision.CompareTag("Player"))
         {
-            gameObject.SetActive(false);
+            // IMPORTANT: return to pool
+            BulletPool.instance.ReturnBullet(gameObject);
         }
     }
 }

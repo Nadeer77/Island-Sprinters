@@ -9,6 +9,7 @@ TagManager:
   - BouncePad
   - PortalA
   - PortalB
+  - Ground
   layers:
   - Default
   - TransparentFX
